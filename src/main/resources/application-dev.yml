@@ -1,0 +1,93 @@
+server:
+  port: 8080
+
+jwt:
+  header: Authorization
+  tokenHead: 'Bearer '
+
+web:
+  upload-path: E:\\project\\github\\model-manager\\target\\
+
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/model?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+
+#  servlet:
+#    multipart:
+#      enabled: true
+#      max-file-size: 5MB
+#      max-request-size: 10MB
+
+  resources:
+    static-locations: file:${web.upload-path}
+  mvc:
+    static-path-pattern: /**
+#    static-path-pattern: /static/**
+
+
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapping/*Mapper.xml
+  type-aliases-package: com.zkwg.modelmanager.entity
+
+# docker
+docker:
+#  url: tcp://192.168.1.107:2375
+  url: tcp://192.168.0.113:2375
+
+harbor:
+  url: core.harbor.domain:30184
+  username: admin
+  password: Harbor%2020
+  project: ai-platform
+
+
+# k8s 配置
+k8s:
+  admin-conf: classpath:k8s/admin_local.conf
+  url: https://116.63.172.190:6443
+  client-crt: classpath:k8s/apiserver-kubelet-client.crt
+  client-key: classpath:k8s/apiserver-kubelet-client.key
+  ca-crt: classpath:k8s/ca.crt
+
+
+ambassador:
+  url: http://172.20.10.14:31205/
+
+minio:
+  endpoint: http://116.63.172.190:31578/
+  accessKey: minioadmin
+  secretKey: minioadmin
+
+#?orgId=1&refresh=10s&var-datasource=default&var-cluster=&var-namespace=default&var-pod=ambassador-7c66b69b5d-ghvcm&kiosk:
+grafana:
+  pod_url: http://172.20.10.14:31304/d/HOKQeT7Gk/pod-ji-suan-zi-yuan-shi-yong-da-ping
+#  pod_url: http://172.20.10.14:31304/d/6581e46e4e5c7ba40a07646395ef7b23/kubernetes-compute-resources-pod
+  url: http://172.20.10.14:31304
+
+# 对应mapper目录下的IBaseMapper模板Mapper
+mybatis-plus:
+  mapper-locations: classpath:/mybatis/mapping/*Mapper.xml
+#mapper:
+#  mappers:
+#    - com.zkwg.modelmanager.utils.IBaseMapper
+#  not-empty: false
+#  identity: MYSQL
+
+model:
+  service:
+     address_url: http://localhost:5001/hello
+     pur_sel_url: http://localhost:5000/matching_func
+#    address_url: http://150.100.27.168:5001/address_parsing
+#    pur_sel_url: http://150.100.27.168:5000/matching_func
+
+#showSql
+logging:
+  level:
+    com:
+      zkwg:
+        modelmanager:
+          mapper : debug

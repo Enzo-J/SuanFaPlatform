@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkwg.modelmanager.mapper.ContainerMapper">
+  <resultMap id="BaseResultMap" type="com.zkwg.modelmanager.entity.Container">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tenant_id" property="tenantId" jdbcType="INTEGER" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name_en" jdbcType="VARCHAR" property="nameEn" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="namespace" jdbcType="VARCHAR" property="namespace" />
+    <result column="pod_name" jdbcType="VARCHAR" property="podName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="container_json" jdbcType="LONGVARCHAR" property="containerJson" />
+    <result column="run_json" jdbcType="LONGVARCHAR" property="runJson" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+  </resultMap>
+
+  <!-- 修改 -->
+  <update id="updateByNameEN" parameterType="com.zkwg.modelmanager.entity.Container">
+    update container
+    <set>
+      <if test="namespace != null">namespace=#{namespace},</if>
+      <if test="podName != null">pod_name=#{podName},</if>
+      <if test="status != null">status=#{status},</if>
+      <if test="runJson != null">run_json=#{runJson},</if>
+    </set>
+    where name_en = #{nameEn}
+  </update>
+
+  <!-- 批量更新容器状态 -->
+  <update id="updateStatusByNameEN" parameterType="java.util.List">
+    <foreach collection="containers" separator=";" item="c">
+        update container
+          <set>
+            <if test="c.status != null">status=#{c.status},</if>
+            <if test="c.namespace != null">namespace=#{c.namespace},</if>
+            <if test="c.podName != null">pod_name=#{c.podName},</if>
+          </set>
+          where name_en = #{c.nameEn}
+    </foreach>
+  </update>
+
+  <select id="findPage" resultMap="BaseResultMap">
+    SELECT *
+    FROM container s ${ew.customSqlSegment}
+  </select>
+
+</mapper>

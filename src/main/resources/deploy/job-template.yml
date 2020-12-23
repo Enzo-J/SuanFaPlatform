@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-template
+  namespace: kube-public
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: job-container
+          image: busybox
+          imagePullPolicy: "IfNotPresent"
+          args:
+            - "bin/sh"
+            - "-c"
+            - "for i in 9 8 7 6 5 4 3 2 1; do echo $i; env; sleep 20;  done"

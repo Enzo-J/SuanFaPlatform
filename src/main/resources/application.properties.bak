@@ -1,0 +1,5 @@
+# k8s ÅäÖÃ
+#k8s.url=https://172.20.10.14/:6443
+#k8s.client-crt=classpath:k8s/apiserver-kubelet-client.crt
+#k8s.client-key=classpath:k8s/apiserver-kubelet-client.key
+#k8s.ca-crt=classpath:k8s/ca.crt

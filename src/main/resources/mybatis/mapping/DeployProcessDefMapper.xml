@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkwg.modelmanager.mapper.DeployProcessDefMapper">
+  <resultMap id="BaseResultMap" type="com.zkwg.modelmanager.entity.DeployProcessDef">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tenant_id" property="tenantId" jdbcType="INTEGER" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="flag" jdbcType="TINYINT" property="flag" />
+    <result column="deploy_json_md5" jdbcType="VARCHAR" property="deployJsonMd5" />
+    <result column="models" jdbcType="VARCHAR" property="models" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="deploy_json" jdbcType="LONGVARCHAR" property="deployJson" />
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+  </resultMap>
+
+  <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" parameterType="com.zkwg.modelmanager.entity.DeployProcessDef">
+    insert into deploy_process_def
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="deployJsonMd5 != null">
+        deploy_json_md5,
+      </if>
+      <if test="models != null">
+        models,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+      <if test="deployJson != null">
+        deploy_json,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=TINYINT},
+      </if>
+      <if test="deployJsonMd5 != null">
+        #{deployJsonMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="models != null">
+        #{models,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deployJson != null">
+        #{deployJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+</mapper>

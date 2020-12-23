@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zkwg.modelmanager.mapper.TrainingParameterMapper" >
+  <resultMap id="BaseResultMap" type="com.zkwg.modelmanager.entity.TrainingParameter" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tenant_id" property="tenantId" jdbcType="INTEGER" />
+    <result column="training_id" property="trainingId" jdbcType="INTEGER" />
+    <result column="algorithm_id" property="algorithmId" jdbcType="INTEGER" />
+    <result column="parameter_id" property="parameterId" jdbcType="INTEGER" />
+    <result column="param_name" property="paramName" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: flask-model
+  name: flask-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flasknode
+  template:
+    metadata:
+      labels:
+        app: flasknode
+    spec:
+      imagePullSecrets:
+      - name: login
+      containers:
+        - name: flask-node
+          image: registry.ng.bluemix.net/flask-node/app
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: flask-model
+  name: flask-service
+spec:
+  ports:
+    - port: 5000
+      name: http
+      targetPort: 5000
+  selector:
+    app: flasknode

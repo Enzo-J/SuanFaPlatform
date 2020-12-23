@@ -1,0 +1,61 @@
+server:
+  port: 8080
+
+web:
+  upload-path: E:\project\github\model-manager\target\
+
+spring:
+  datasource:
+    username: root
+    password: szwg%2020
+    url: jdbc:mysql://150.100.27.168:3306/model?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+#    password: 123456
+#    url: jdbc:mysql://localhost:3306/model?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+  resources:
+    static-locations: file:${web.upload-path}
+  mvc:
+    static-path-pattern: /**
+
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapping/*Mapper.xml
+  type-aliases-package: com.zkwg.modelmanager.entity
+
+# k8s 配置
+k8s:
+  admin-conf: classpath:k8s/admin.conf
+
+minio:
+  endpoint: http://150.100.27.168:31578/
+#  endpoint: http://172.20.10.14:31578/
+  accessKey: minioadmin
+  secretKey: minioadmin
+
+grafana:
+  url: http://150.100.27.168:31304
+#  pod_url: http://172.20.10.14:31304/d/6581e46e4e5c7ba40a07646395ef7b23/kubernetes-compute-resources-pod
+  pod_url: http://150.100.27.168:31304/d/6581e46e4e5c7ba40a07646395ef7b23/kubernetes-compute-resources-pod
+#  url: http://172.20.10.14:31304
+
+# 对应mapper目录下的IBaseMapper模板Mapper
+mapper:
+  mappers:
+    - com.zkwg.modelmanager.utils.IBaseMapper
+  not-empty: false
+  identity: MYSQL
+
+model:
+  service:
+#     address_url: http://localhost:5001/hello
+#     pur_sel_url: http://localhost:5000/matching_func
+    address_url: http://150.100.27.168:5001/address_parsing
+    pur_sel_url: http://150.100.27.168:5000/matching_func
+
+#showSql
+logging:
+  level:
+    com:
+      zkwg:
+        modelmanager:
+          mapper : debug

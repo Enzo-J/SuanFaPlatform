@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkwg.modelmanager.mapper.ModelMapper">
+  <resultMap id="BaseResultMap" type="com.zkwg.modelmanager.entity.Model">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tenant_id" property="tenantId" jdbcType="INTEGER" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name_en" jdbcType="VARCHAR" property="nameEn" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="implementation" jdbcType="VARCHAR" property="implementation" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="minio_url" jdbcType="VARCHAR" property="minioUrl" />
+    <result column="filename" jdbcType="VARCHAR" property="filename" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="subscribe_num" property="subscribeNum" jdbcType="INTEGER" />
+    <result column="view_num" property="viewNum" jdbcType="INTEGER" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+    <result column="is_publish" jdbcType="TINYINT" property="isPublish" />
+    <result column="api_doc" jdbcType="LONGVARCHAR" property="apiDoc" />
+  </resultMap>
+
+  <resultMap id="PublicModelList" type="com.zkwg.modelmanager.entity.Model">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tenant_id" property="tenantId" jdbcType="INTEGER" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name_en" jdbcType="VARCHAR" property="nameEn" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="implementation" jdbcType="VARCHAR" property="implementation" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="minio_url" jdbcType="VARCHAR" property="minioUrl" />
+    <result column="filename" jdbcType="VARCHAR" property="filename" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="subscribe_num" property="subscribeNum" jdbcType="INTEGER" />
+    <result column="view_num" property="viewNum" jdbcType="INTEGER" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+    <result column="is_publish" jdbcType="TINYINT" property="isPublish" />
+    <result column="api_doc" jdbcType="LONGVARCHAR" property="apiDoc" />
+    <result column="is_sub" jdbcType="TINYINT" property="isSub" />
+  </resultMap>
+
+
+  <update id="updateStatusByUrls" parameterType="java.util.List">
+    <foreach close="" collection="list" index="index" item="item" open="" separator=";">
+      update model
+      <set>
+        <if test="item.status != null">
+          status = #{item.status},
+        </if>
+      </set>
+      where minio_url = #{item.minioUrl}
+    </foreach>
+  </update>
+
+  <update id="updateStatusByImage" parameterType="java.util.List">
+    <foreach close="" collection="list" index="index" item="item" open="" separator=";">
+      update model
+      <set>
+        <if test="item.status != null">
+          status = #{item.status},
+        </if>
+      </set>
+      where image = #{item.image}
+    </foreach>
+  </update>
+
+  <update id="updateStatusByUrl" parameterType="com.zkwg.modelmanager.entity.Model">
+      update model
+      <set>
+        <if test="status != null">
+          status = #{status},
+        </if>
+      </set>
+      where minio_url = #{minioUrl}
+  </update>
+
+  <select id="subscribeList" resultMap="BaseResultMap">
+    select m.*
+    from (select target_id,creator,create_time from subscribe where creator = #{param.userId} and target_type = 2 and flag = 1) sub
+    left join model m on sub.target_id = m.id
+    <where>
+      <if test="param.name != null and param.name != ''">
+        and m.name LIKE CONCAT('%',#{param.name},'%')
+      </if>
+      and  m.is_delete = 0
+    </where>
+    order by m.createtime desc
+  </select>
+
+  <select id="publicModelList" resultMap="PublicModelList">
+    select m.*,(case when sub.target_id > 0 then 1 else 0 end) is_sub
+    from model m
+    left join (
+    select sub.target_id from subscribe sub
+    where sub.creator = #{param.userId}
+    and sub.flag = 1
+    and sub.target_type = 2) sub
+    on sub.target_id = m.id
+    <where>
+      <if test="param.name != null and param.name != ''">
+        and m.name LIKE CONCAT('%',#{param.name},'%')
+      </if>
+      and  m.is_delete = 0
+      and m.is_publish = 1
+      and m.type = #{param.type}
+    </where>
+    order by m.createtime desc
+  </select>
+
+  <select id="findPage" resultMap="BaseResultMap">
+    SELECT *
+    FROM model s ${ew.customSqlSegment}
+  </select>
+
+</mapper>

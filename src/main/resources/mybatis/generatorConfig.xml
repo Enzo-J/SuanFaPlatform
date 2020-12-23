@@ -1,0 +1,133 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<!DOCTYPE generatorConfiguration-->
+<!--        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"-->
+<!--        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">-->
+<!--<generatorConfiguration>-->
+<!--    &lt;!&ndash; 引入 application.yml &ndash;&gt;-->
+<!--    <properties resource="application.yml" />-->
+
+<!--    &lt;!&ndash; MyBatis3Simple：不生成 Example相关类及方法 &ndash;&gt;-->
+<!--    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">-->
+<!--        <property name="beginningDelimiter" value="`" />-->
+<!--        <property name="endingDelimiter" value="`" />-->
+
+<!--        &lt;!&ndash; 指定生成 Mapper 的继承模板 &ndash;&gt;-->
+<!--        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">-->
+<!--            <property name="mappers" value="com.zkwg.modelmanager.utils.IBaseMapper" />-->
+<!--        </plugin>-->
+
+<!--        &lt;!&ndash; 生成 JavaBean 对象重写 toString方法 &ndash;&gt;-->
+<!--        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />-->
+
+<!--        &lt;!&ndash; 生成 JavaBean 对象继承 Serializable 类 &ndash;&gt;-->
+<!--        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />-->
+
+<!--        &lt;!&ndash; 生成 JavaBean 对象重写 equals 和 hashCode 方法 &ndash;&gt;-->
+<!--        &lt;!&ndash; <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" /> &ndash;&gt;-->
+
+<!--        &lt;!&ndash; jdbc 连接配置 &ndash;&gt;-->
+<!--        <jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
+<!--                        connectionURL="jdbc:mysql://localhost:3306/model?characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=UTC"-->
+<!--                        userId="root"-->
+<!--                        password="123456">-->
+<!--        </jdbcConnection>-->
+
+<!--        &lt;!&ndash; 实体类 &ndash;&gt;-->
+<!--        <javaModelGenerator targetPackage="com.zkwg.modelmanager.entity"-->
+<!--                            targetProject="src/main/java" />-->
+
+<!--        &lt;!&ndash; xml 配置文件 &ndash;&gt;-->
+<!--        <sqlMapGenerator targetPackage="mybatis.mapping"-->
+<!--                         targetProject="src/main/resources" />-->
+
+<!--        &lt;!&ndash; mapper 类 &ndash;&gt;-->
+<!--        <javaClientGenerator targetPackage="com.zkwg.modelmanager.mapper"-->
+<!--                             targetProject="src/main/java" type="XMLMAPPER" />-->
+
+<!--        &lt;!&ndash; Mysql 配置 &ndash;&gt;-->
+<!--        &lt;!&ndash; <generatedKey column="id" sqlStatement="Mysql" identity="true" /> &ndash;&gt;-->
+<!--        &lt;!&ndash; Oracle 配置 &ndash;&gt;-->
+<!--        &lt;!&ndash; <generatedKey column="id" sqlStatement="select SEQ_{1}.nextval from dual" identity="false" type="pre"/> &ndash;&gt;-->
+
+<!--        &lt;!&ndash; tableName：数据库表名，domainObjectName：生成文件名 ，schema：数据源&ndash;&gt;-->
+<!--        &lt;!&ndash;<table tableName="resource_pool" domainObjectName="ResourcePool">-->
+<!--            <generatedKey column="res_pool_id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;<table tableName="model" domainObjectName="Model">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>&ndash;&gt;-->
+<!--               &lt;!&ndash; <table tableName="deploy_process_def" domainObjectName="DeployProcessDef">-->
+<!--                    <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--                </table>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;<table tableName="server" domainObjectName="Server">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;container&ndash;&gt;-->
+<!--        &lt;!&ndash;<table tableName="container" domainObjectName="Container">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;<table tableName="algorithm" domainObjectName="Algorithm">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>&ndash;&gt;-->
+<!--        &lt;!&ndash;<table tableName="algorithm_type" domainObjectName="AlgorithmType">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>&ndash;&gt;-->
+
+<!--       &lt;!&ndash; <table tableName="parameter" domainObjectName="AlgorithmParameter">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;<table tableName="training" domainObjectName="Training">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>&ndash;&gt;-->
+<!--        &lt;!&ndash;-->
+<!--                <table tableName="training_parameter" domainObjectName="TrainingParameter">-->
+<!--                    <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--                </table>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;<table tableName="data_set" domainObjectName="DataSet">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;<table tableName="integrate_server" domainObjectName="IntegrateServer">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;<table tableName="permission" domainObjectName="Permission">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>&ndash;&gt;-->
+<!--        &lt;!&ndash;-->
+<!--        <table tableName="role" domainObjectName="Role">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>-->
+
+<!--        <table tableName="user" domainObjectName="User">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>-->
+<!--        &ndash;&gt;-->
+<!--        &lt;!&ndash;<table tableName="tenant" domainObjectName="Tenant">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>&ndash;&gt;-->
+<!--        &lt;!&ndash;-->
+<!--        <table tableName="organization" domainObjectName="Organization">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>-->
+
+<!--        <table tableName="sub_org" domainObjectName="subOrg">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>&ndash;&gt;-->
+
+<!--        <table tableName="user_role" domainObjectName="UserRole">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>-->
+
+<!--        <table tableName="role_permission" domainObjectName="RolePermission">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
+<!--        </table>-->
+
+<!--    </context>-->
+<!--</generatorConfiguration>-->

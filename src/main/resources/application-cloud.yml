@@ -1,0 +1,92 @@
+server:
+  port: 8080
+
+jwt:
+  header: Authorization
+  tokenHead: 'Bearer '
+
+web:
+  upload-path: /opt/upload/
+
+spring:
+  datasource:
+    username: root
+    password: Root@123456
+    url: jdbc:mysql://mysql.mysql-system.svc.cluster.local:3306/model?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 10000MB
+      max-request-size: 100000MB
+
+  resources:
+    static-locations: file:${web.upload-path}
+  mvc:
+    static-path-pattern: /**
+#    static-path-pattern: /static/**
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapping/*Mapper.xml
+  type-aliases-package: com.zkwg.modelmanager.entity
+
+#dolphinscheduler
+dolphinscheduler:
+  url: http://dolphinscheduler-frontend.dolphin-system.svc.cluster.local:8888
+  project-name: AI
+  token: 1a44aa9cad8adbf817afd21f1f6a729c
+
+# docker
+docker:
+  url: tcp://172.16.0.5:2375
+
+harbor:
+  url: core.harbor.domain:30184
+  username: admin
+  password: Harbor%2020
+  project: ai-platform
+
+
+# k8s 配置
+k8s:
+  admin-conf: classpath:k8s/admin_cloud.conf
+  url: https://172.16.0.5:6443
+  client-crt: classpath:k8s/apiserver-kubelet-client.crt
+  client-key: classpath:k8s/apiserver-kubelet-client.key
+  ca-crt: classpath:k8s/ca.crt
+
+ambassador:
+  url: http://116.63.172.190:30453/
+
+minio:
+  endpoint: http://minio.minio-system.svc.cluster.local:9000/
+  accessKey: minioadmin
+  secretKey: minioadmin
+
+#?orgId=1&refresh=10s&var-datasource=default&var-cluster=&var-namespace=default&var-pod=ambassador-7c66b69b5d-ghvcm&kiosk:
+grafana:
+#  pod_url: http://prometheus-grafana.monitoring.svc.cluster.local/d/HOKQeT7Gk/pod-ji-suan-zi-yuan-shi-yong-da-ping
+#  url: http://prometheus-grafana.monitoring.svc.cluster.local
+  pod_url: http://116.63.172.190:31304/d/HOKQeT7Gk/pod-ji-suan-zi-yuan-jian-kong
+  url: http://116.63.172.190:31304
+
+# 对应mapper目录下的IBaseMapper模板Mapper
+mybatis-plus:
+  mapper-locations: classpath:/mybatis/mapping/*Mapper.xml
+#mapper:
+#  mappers:
+#    - com.zkwg.modelmanager.utils.IBaseMapper
+#  not-empty: false
+#  identity: MYSQL
+
+model:
+  service:
+     address_url: http://172.16.0.5:5001/hello
+     pur_sel_url: http://172.16.0.5:5000/matching_func
+
+#showSql
+logging:
+  level:
+    com:
+      zkwg:
+        modelmanager:
+          mapper : debug

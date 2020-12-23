@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zkwg.modelmanager.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.zkwg.modelmanager.entity.Role" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tenant_id" property="tenantId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="ds_type" jdbcType="VARCHAR" property="dsType"/>
+    <result column="creator" property="creator" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <resultMap id="getUserVosPage" type="com.zkwg.modelmanager.entity.Role" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tenant_id" property="tenantId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="ds_type" jdbcType="VARCHAR" property="dsType"/>
+    <result column="creator" property="creator" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <collection property="permissions" ofType="com.zkwg.modelmanager.entity.Permission"
+                select="com.zkwg.modelmanager.mapper.PermissionMapper.selectPermissionsByRoleId"  column="id">
+    </collection>
+  </resultMap>
+
+  <select id="selectUserRoleListByUserId" parameterType="java.lang.Integer" resultType="com.zkwg.modelmanager.entity.Role" >
+      SELECT r.name,ur.role_id,r.id
+      FROM (role r LEFT JOIN user_role ur ON r.id = ur.role_id )
+      LEFT JOIN user u ON u.id = ur.user_id WHERE u.id =  #{userId}
+  </select>
+
+  <select id="getRolesPage" resultMap="getUserVosPage" >
+      select r.id,r.tenant_id,r.name,r.type,
+             r.status,r.ds_type,r.creator,r.create_time,
+             r.update_time,r.is_delete,r.remark
+      from role r
+      <where>
+        <if test="param.name != null and param.name != ''">
+          and r.name LIKE CONCAT('%',#{param.name},'%')
+        </if>
+        and  r.is_delete = 0
+      </where>
+      order by r.create_time desc
+  </select>
+
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkwg.modelmanager.mapper.ServerMapper">
+  <resultMap id="BaseResultMap" type="com.zkwg.modelmanager.entity.Server">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tenant_id" property="tenantId" jdbcType="INTEGER" />
+    <result column="process_def_id" jdbcType="INTEGER" property="processDefId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="server_json_md5" jdbcType="VARCHAR" property="serverJsonMd5" />
+    <result column="containers" jdbcType="VARCHAR" property="containers" />
+    <result column="models" jdbcType="VARCHAR" property="models" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="business_type" jdbcType="TINYINT" property="businessType" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="is_publish" jdbcType="TINYINT" property="isPublish" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+    <result column="server_json" jdbcType="LONGVARCHAR" property="serverJson" />
+    <result column="run_result_json" jdbcType="LONGVARCHAR" property="runResultJson" />
+    <result column="pod_json" jdbcType="LONGVARCHAR" property="podJson" />
+    <result column="summarize" jdbcType="LONGVARCHAR" property="summarize" />
+    <result column="params_desc" jdbcType="LONGVARCHAR" property="paramsDesc" />
+    <result column="data_format" jdbcType="LONGVARCHAR" property="dataFormat" />
+    <result column="principle" jdbcType="LONGVARCHAR" property="principle" />
+    <result column="subscribe_num" property="subscribeNum" jdbcType="INTEGER" />
+    <result column="view_num" property="viewNum" jdbcType="INTEGER" />
+    <result column="call_num" property="callNum" jdbcType="INTEGER" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+  </resultMap>
+
+  <resultMap id="PublicServerList" type="com.zkwg.modelmanager.entity.Server">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tenant_id" property="tenantId" jdbcType="INTEGER" />
+    <result column="process_def_id" jdbcType="INTEGER" property="processDefId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="server_json_md5" jdbcType="VARCHAR" property="serverJsonMd5" />
+    <result column="containers" jdbcType="VARCHAR" property="containers" />
+    <result column="models" jdbcType="VARCHAR" property="models" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="business_type" jdbcType="TINYINT" property="businessType" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="is_publish" jdbcType="TINYINT" property="isPublish" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+    <result column="server_json" jdbcType="LONGVARCHAR" property="serverJson" />
+    <result column="run_result_json" jdbcType="LONGVARCHAR" property="runResultJson" />
+    <result column="pod_json" jdbcType="LONGVARCHAR" property="podJson" />
+    <result column="summarize" jdbcType="LONGVARCHAR" property="summarize" />
+    <result column="params_desc" jdbcType="LONGVARCHAR" property="paramsDesc" />
+    <result column="data_format" jdbcType="LONGVARCHAR" property="dataFormat" />
+    <result column="principle" jdbcType="LONGVARCHAR" property="principle" />
+    <result column="subscribe_num" property="subscribeNum" jdbcType="INTEGER" />
+    <result column="view_num" property="viewNum" jdbcType="INTEGER" />
+    <result column="call_num" property="callNum" jdbcType="INTEGER" />
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="is_sub" jdbcType="TINYINT" property="isSub" />
+  </resultMap>
+
+  <select id="subscribeList" resultMap="BaseResultMap">
+    select s.*
+    from (select target_id,creator,create_time from subscribe where creator = #{param.userId} and target_type = 3 and flag = 1) sub
+    left join server s on sub.target_id = s.id
+    <where>
+      <if test="param.name != null and param.name != ''">
+        and s.name LIKE CONCAT('%',#{param.name},'%')
+      </if>
+      and  s.is_delete = 0
+    </where>
+    order by s.createtime desc
+  </select>
+
+
+  <select id="publicServerList" resultMap="PublicServerList">
+    select s.*,(case when sub.target_id > 0 then 1 else 0 end) is_sub
+    from server s
+    left join (
+    select sub.target_id from subscribe sub
+    where sub.creator = #{param.userId}
+    and sub.flag = 1
+    and sub.target_type = 3) sub
+    on sub.target_id = s.id
+    <where>
+      <if test="param.name != null and param.name != ''">
+        and s.name LIKE CONCAT('%',#{param.name},'%')
+      </if>
+      and s.is_delete = 0
+      and s.is_publish = 1
+      <if test="param.businessType != null and param.businessType > 0">
+        and s.business_type = #{param.businessType}
+      </if>
+    </where>
+    order by s.createtime desc
+  </select>
+
+  <select id="findPage" resultMap="BaseResultMap">
+    SELECT *
+    FROM server s ${ew.customSqlSegment}
+  </select>
+
+</mapper>

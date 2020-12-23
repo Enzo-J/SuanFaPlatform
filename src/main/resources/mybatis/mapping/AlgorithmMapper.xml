@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkwg.modelmanager.mapper.AlgorithmMapper">
+  <resultMap id="BaseResultMap" type="com.zkwg.modelmanager.entity.Algorithm">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tenant_id" property="tenantId" jdbcType="INTEGER" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="alg_type_id" jdbcType="TINYINT" property="algTypeId" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="pictrue" jdbcType="VARCHAR" property="pictrue" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+    <result column="is_publish" jdbcType="TINYINT" property="isPublish" />
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+  </resultMap>
+
+
+</mapper>

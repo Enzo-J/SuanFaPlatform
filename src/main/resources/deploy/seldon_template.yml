@@ -1,0 +1,26 @@
+apiVersion: machinelearning.seldon.io/v1
+kind: SeldonDeployment
+metadata:
+  name:
+  namespace:
+spec:
+  name: template
+  predictors:
+    - annotations:
+        seldon.io/executor: "true"
+#        seldon.io/no-engine: "true"
+      componentSpecs:
+        - spec:
+            containers:
+      graph:
+#        children: []
+        implementation:
+        modelUri:
+        envSecretRefName: seldon-init-container-secret
+        name:
+        parameters:
+          - name: method
+            type: STRING
+            value: predict
+      name: default
+      replicas: 1

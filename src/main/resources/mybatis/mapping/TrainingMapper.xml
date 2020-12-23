@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkwg.modelmanager.mapper.TrainingMapper">
+  <resultMap id="BaseResultMap" type="com.zkwg.modelmanager.entity.Training">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tenant_id" property="tenantId" jdbcType="INTEGER" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="data_set_id" jdbcType="INTEGER" property="dataSetId" />
+    <result column="data_set_training_proportion" jdbcType="FLOAT" property="dataSetTrainingProportion" />
+    <result column="data_set_validation_proportion" jdbcType="FLOAT" property="dataSetValidationProportion" />
+    <result column="container_ids" jdbcType="VARCHAR" property="containerIds" />
+    <result column="algorithm_id" jdbcType="INTEGER" property="algorithmId" />
+    <result column="job_json_md5" jdbcType="VARCHAR" property="jobJsonMd5" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+    <result column="job_json" jdbcType="LONGVARCHAR" property="jobJson" />
+    <result column="runing_job_json" jdbcType="LONGVARCHAR" property="runingJobJson" />
+    <result column="model_id" jdbcType="VARCHAR" property="modelId" />
+    <result column="parameters" jdbcType="VARCHAR" property="parameters" />
+  </resultMap>
+
+</mapper>
